@@ -71,9 +71,14 @@ add_action( 'init', 'iv1_custom_inventory', 0 );
 /* try to make it work.. atleast.. */
 /* function 1: Add new record */
 function add_record($params) {
-	$params['post_type'] = "inventory";
-	// $result = wp_insert_post($params, true);
-	return $params;
+	// $params['post_type'] = "inventory";
+	$post = array(
+			'product_name' => $params['product_name'],
+			'quantity' => $params['quantity']
+		);
+	$result = wp_insert_post($post, true);
+	
+	// return $params;
 	/*$query = parse_url($_SERVER["QUERY_STRING"], PHP_URL_QuERY);
 	parse_str($query, $params);
 	var_dump($params);*/
