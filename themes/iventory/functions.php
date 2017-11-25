@@ -68,4 +68,84 @@ function iv1_custom_inventory() {
 }
 add_action( 'init', 'iv1_custom_inventory', 0 );
 
+/* try to make it work.. atleast.. */
+/* function 1: Add new record */
+function add_record($params) {
+	$params['post_type'] = "inventory";
+	// $result = wp_insert_post($params, true);
+	return $params;
+	/*$query = parse_url($_SERVER["QUERY_STRING"], PHP_URL_QuERY);
+	parse_str($query, $params);
+	var_dump($params);*/
+/*	$record = array();
+
+	foreach($params as $k=>$v){
+		var_dump($k);
+	}
+	$post = $params['product_name'];*/
+	/*$post = array(
+			'id' => $params['product_name']
+		);	*/
+	/*var_dump($params[]);*/
+	/*parse_url($_SERVER["QUERY_STRING"], (PHP_URL_QuERY, $result);
+	$json = json_encode($result);
+	var_dump($json);*/
+	/*$posts = get_posts( array(
+        'post_type' => 'inventory'
+    ) );
+
+	$post = array(
+			'id' => $param['id']
+		);*/
+	
+
+	return $result;
+}
+
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'iventory/v1', 'add-record',array(
+		'methods'  => 'POST',
+		'callback' => 'add_record'
+	) );
+} );
+
+/* function 2: Update record */
+function update_record($param){
+	var_dump($param);
+	$post = array(
+			'id' => $param['id']
+		);
+}
+
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'iventory/v1', 'update-record',array(
+		'methods'  => 'PUT',
+		'callback' => 'update_record'
+		) );
+} );
+
+/* function 3: get all records */
+function get_records ( $params ){
+    $posts = get_posts( array(
+        'post_type' => 'inventory'
+    ) );
+
+    if ( empty( $posts ) ) {
+        return null;
+    }
+
+    return $posts;
+}
+ 
+// Register the rest route here.
+ 
+add_action( 'rest_api_init', function () {
+	register_rest_route(
+		'iventory/v1',
+		'get-records',
+		array(
+			'methods'  => 'GET',
+			'callback' => 'get_records'
+		));
+});
 ?>
